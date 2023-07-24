@@ -20,8 +20,14 @@ configurations {
 repositories {
     mavenCentral()
 }
+ext {
+    lombokMapstructBindingVersion = "0.2.0"
+    mapstructVersion = "1.5.5.Final"
+}
 
 dependencies {
+
+    runtimeOnly'com.h2database:h2'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
@@ -31,8 +37,18 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}","org.projectlombok:lombok-mapstruct-binding:${lombokMapstructBindingVersion}"
+
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+compileJava {
+    options.compilerArgs = [
+            '-Amapstruct.defaultComponentModel=spring'
+    ]
 }
