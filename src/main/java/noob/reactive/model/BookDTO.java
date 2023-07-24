@@ -1,12 +1,11 @@
 package noob.reactive.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,18 +16,21 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class BookDTO {
 
-    @Id
     private Integer id;
+
+    @NotBlank
+    @Size(min = 3 , max = 255)
     private String bookName;
+
+    @Size(min = 3 , max = 255)
     private String author;
+
+    @Size(min = 13 , max = 25)
     private String isbn;
+
     private BigDecimal price;
     private Integer quantityOnHand;
-
-    @CreatedDate
     private LocalDateTime createdDate;
-
-    @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 
 
