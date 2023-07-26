@@ -49,7 +49,7 @@ public class BookController {
 
     @PutMapping(BOOK_PATH_ID)
     Mono<ResponseEntity<?>> updateBookById(@PathVariable("bookId") Integer id,@Validated @RequestBody BookDTO bookDTO ){
-       return bookService.updateBookById(id,bookDTO).map(savedBook -> ResponseEntity.ok().build());
+       return bookService.updateBookById(id,bookDTO).map(savedBook -> ResponseEntity.noContent().build());
     }
 
     @DeleteMapping(BOOK_PATH_ID)

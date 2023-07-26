@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataR2dbcTest
 @Import(DataBaseConfig.class)
-class BookRepositoryTest {
+public class BookRepositoryTest {
 
     @Autowired
     BookRepository bookRepository;
@@ -26,13 +26,13 @@ class BookRepositoryTest {
                 });
 
     }
-    Book book(){
+    public static Book book(){
         return Book.builder()
                 .bookName("Java")
                 .author("abdo")
                 .price(new BigDecimal("30.3"))
                 .quantityOnHand(200)
-                .isbn("324-34838483")
+                .isbn("324-34838483-343")
                 .build();
     }
 }
