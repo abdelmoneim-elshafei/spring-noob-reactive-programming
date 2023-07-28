@@ -30,12 +30,46 @@ class BookControllerTest {
                 .expectStatus().isNoContent();
     }
     @Test
+    void deleteBookByIdNotFound() {
+        webTestClient.delete().uri(BookController.BOOK_PATH_ID,200)
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+    @Test
     void updateBookById() {
         webTestClient.put().uri(BookController.BOOK_PATH_ID,2)
                 .body(Mono.just(BookRepositoryTest.book()),BookDTO.class)
                 .header("Content-type","application/json")
                 .exchange()
                 .expectStatus().isNoContent();
+    }
+    @Test
+    void updateBookByIdNotFound() {
+        webTestClient.put().uri(BookController.BOOK_PATH_ID,200)
+                .body(Mono.just(BookRepositoryTest.book()),BookDTO.class)
+                .header("Content-type","application/json")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+    @Test
+    void updateBookByIdBad() {
+        Book book = BookRepositoryTest.book();
+        book.setBookName("");
+        webTestClient.put().uri(BookController.BOOK_PATH_ID,2)
+                .body(Mono.just(book),BookDTO.class)
+                .header("Content-type","application/json")
+                .exchange()
+                .expectStatus().isBadRequest();
+    }
+    @Test
+    void createNewBookBad() {
+        Book book = BookRepositoryTest.book();
+        book.setBookName("");
+        webTestClient.post().uri(BookController.BOOK_PATH)
+                .body(Mono.just(book),BookDTO.class)
+                .header("Content-type","application/json")
+                .exchange()
+                .expectStatus().isBadRequest();
     }
     @Test
     void createNewBook() {
@@ -46,7 +80,13 @@ class BookControllerTest {
                 .expectStatus().isCreated()
                 .expectHeader().location("http://localhost:8080/api/v2/book/5");
     }
+    @Test
+    void getBookByIdNotFound() {
+        webTestClient.get().uri(BookController.BOOK_PATH_ID,200)
+                .exchange()
+                .expectStatus().isNotFound();
 
+    }
     @Test
     @Order(1)
     void getBookById() {
